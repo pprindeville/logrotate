@@ -65,6 +65,17 @@ AC_ARG_WITH([state-file-path],
 AC_DEFINE_UNQUOTED([STATEFILE], "$STATE_FILE_PATH")
 AC_SUBST(STATE_FILE_PATH)
 
+AC_ARG_ENABLE([dot-files],
+   [AS_HELP_STRING([--enable-dot-files],
+     [Include configuration files starting with dot])],
+   [],
+   [enable_dot_files=yes])
+AS_CASE(["$enable_dot_files"],
+   [yes], [],
+   [no], [AC_DEFINE([DISABLE_DOT_FILES], [1],
+     [Skip configuration files whose name starts with dot])],
+   [])
+
 AC_CHECK_FUNCS([asprintf fork madvise qsort strndup strptime vfork vsyslog])
 
 AC_CONFIG_FILES([Makefile test/Makefile logrotate.8 logrotate.spec])
